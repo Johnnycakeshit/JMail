@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>log in</title>
+</head>
+<body>
+<link rel="stylesheet" href="sign-in.css"/>
+<div class="top"><center><p class="sign-in"> Log In </p></center></div>
+<hr/>
+<br/>
+<br/>
+<br/>
+<center>
+<div class="div1">
+<form action="" method="post">
+<input type="text" name="username" placeholder="username">
+<br>
+<br>
+<input type="password" name="password" placeholder="password">
+<br>
+<br>
+<input type="submit" name="submit" value="Log In">
+</form>
+</div>
+</center>
+<?php
+if (isset($_POST['submit']))
+{
+$username=$_POST['username'];
+$password=$_POST['password'];
+
+Include 'sign-in.php';
+
+//connecting to a mysql database
+$con= mysqli_connect("mysql.1freehosting.com", "u357510163_johny", "fuckfuck", "u357510163_fuck");
+
+//informs the user if there is an error in the connection.
+if (mysqli_connect_errno())
+{
+echo "can't connect to the database";	
+}
+
+$userpassword_validation=mysql_num_rows(mysqli_query("SELECT * FROM Users WHERE User_Name LIKE $Username AND Password Like $Password ")); 
+
+if ($userpassword_validation==1) 
+{
+setcookie("username", $username); 
+setcookie("logged-in", md5($password)); 
+mysql_close($con);
+header('Location: http://jonathan.allalla.com/home.php');
+mysql_close($con);
+exit();	
+}
+else
+{
+echo "<br><center><font color='red'>Your username or password are incorrect!.</center></font>";
+}
+}
+else{
+
+}
+?>
+
+
+</body>
+</html> 
